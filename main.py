@@ -53,7 +53,9 @@ def get_accuracy(test,predictions):
     return mean([i == j for i,j in zip(test[u'Class'].values, predictions)])
 get_accuracy(test,get_predictions(train, test, 5))
 
-#Юзаем KNeighborsClassifier
+# Юзаем KNeighborsClassifier
+# https://www.kaggle.com/kamrankausar/iris-dataset-ml-and-deep-learning-from-scratch
+# http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
 
 variables = [u'Чашелистик длина, см',u'Чашелистик ширина, см',
               u'Лепесток длина, см',u'Лепесток ширина, см']
