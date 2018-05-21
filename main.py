@@ -1,6 +1,7 @@
 from __future__ import division
 from sklearn.neighbors import KNeighborsClassifier
-
+import matplotlib.pyplot as plt
+import seaborn as sns
 import pandas as pd
 import numpy as np
 
@@ -15,6 +16,7 @@ df.columns = [u'Чашелистик длина, см',
               u'Лепесток длина, см',
               u'Лепесток ширина, см',
              'Class']
+#print(df)
 
 def test_and_train(df, proportion):
     mask = np.random.rand(len(df)) < proportion
@@ -56,7 +58,7 @@ get_accuracy(test,get_predictions(train, test, 5))
 variables = [u'Чашелистик длина, см',u'Чашелистик ширина, см',
               u'Лепесток длина, см',u'Лепесток ширина, см']
 results = []
-for n in range(1,51,2):
+for n in range(1,51,1):
     clf = KNeighborsClassifier(n_neighbors=n)
     clf.fit(train[variables], train[u'Class'])
     preds = clf.predict(test[variables])
@@ -64,6 +66,9 @@ for n in range(1,51,2):
     print("Neighbors: %d, Accuracy: %3f" % (n, accuracy))
     results.append([n, accuracy])
 results = pd.DataFrame(results, columns=["n", "accuracy"])
-pl.plot(results.n, results.accuracy)
-pl.title("Accuracy with Increasing K")
-pl.show()
+
+sns.set_style('whitegrid')
+sns.FacetGrid(df, hue = 'Class', size = 6)\
+.map(plt.scatter, u'Лепесток длина, см', u'Лепесток ширина, см')\
+.add_legend()
+plt.show()
